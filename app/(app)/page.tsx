@@ -14,36 +14,47 @@ export default function Home() {
             <ShortenForm/>
           </main>
           <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-            <div className="p-6 sm:p-8">
-              <h2 className="text-2xl sm:text-3xl font-semibold text-blue-500 mb-4">
+            <div className="p-4 sm:p-6 md:p-8 max-w-2xl mx-auto">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-blue-500 mb-3 sm:mb-4">
                 Hakkında
               </h2>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                <strong>kisaltl.ink</strong>, tamamen açık kaynak kodlu ve ticari amaç gütmeyen bir projedir.
-                Eğitim ve öğrenme odaklı olarak geliştirilmiştir ve sadece yazılım geliştirme pratiği sunmayı hedefler.
-              </p>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Platform, kullanıcıların URL kısaltma sistemlerinin nasıl çalıştığını anlamalarına yardımcı olur.
-                Herhangi bir ticari gelir elde edilmemekte olup, tüm işlemler test ve eğitim amaçlıdır.
-              </p>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Oluşturduğunuz kısa linklerin izlenme istatistiklerini görebilmek için giriş yapmanız gerekmektedir.
-                Giriş yaptıktan sonra dashboard üzerinden tüm linklerinizin performansını takip edebilirsiniz.
-              </p>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Projenin kaynak kodları açık bir şekilde paylaşılmıştır ve dileyen herkes kendi projelerinde kullanabilir.
-              </p>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Geliştirici: <strong>Muhammed Mustafa Kurt</strong> – Full Stack Web Developer
-              </p>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Github: <Link
-                  href="https://github.com/muhammedmustafakurt"
-                  className="text-blue-400 hover:text-blue-600 transition-colors duration-200"
-              >
-                <strong>github.com/muhammedmustafakurt</strong>
-              </Link>
-              </p>
+
+              <div className="space-y-4 sm:space-y-5 text-gray-700">
+                <p className="text-sm sm:text-base leading-relaxed sm:leading-loose">
+                  <strong>kisaltl.ink</strong>, tamamen açık kaynak kodlu ve ticari amaç gütmeyen bir projedir.
+                  Eğitim ve öğrenme odaklı olarak geliştirilmiştir ve sadece yazılım geliştirme pratiği sunmayı hedefler.
+                </p>
+
+                <p className="text-sm sm:text-base leading-relaxed sm:leading-loose">
+                  Platform, kullanıcıların URL kısaltma sistemlerinin nasıl çalıştığını anlamalarına yardımcı olur.
+                  Herhangi bir ticari gelir elde edilmemekte olup, tüm işlemler test ve eğitim amaçlıdır.
+                </p>
+
+                <p className="text-sm sm:text-base leading-relaxed sm:leading-loose">
+                  Oluşturduğunuz kısa linklerin izlenme istatistiklerini görebilmek için giriş yapmanız gerekmektedir.
+                  Giriş yaptıktan sonra dashboard üzerinden tüm linklerinizin performansını takip edebilirsiniz.
+                </p>
+
+                <p className="text-sm sm:text-base leading-relaxed sm:leading-loose">
+                  Projenin kaynak kodları açık bir şekilde paylaşılmıştır ve dileyen herkes kendi projelerinde kullanabilir.
+                </p>
+
+                <p className="text-sm sm:text-base leading-relaxed sm:leading-loose">
+                  Geliştirici: <strong>Muhammed Mustafa Kurt</strong> – Full Stack Web Developer
+                </p>
+
+                <p className="text-sm sm:text-base leading-relaxed sm:leading-loose">
+                  Github:{" "}
+                  <Link
+                      href="https://github.com/muhammedmustafakurt"
+                      className="text-blue-400 hover:text-blue-600 transition-colors duration-200 break-all"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                  >
+                    <strong>github.com/muhammedmustafakurt</strong>
+                  </Link>
+                </p>
+              </div>
             </div>
           </Popup>
 
