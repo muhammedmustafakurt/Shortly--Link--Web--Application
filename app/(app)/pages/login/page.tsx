@@ -4,7 +4,6 @@ import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
     const [form,setForm]= useState({email:'',password:''});
-    const [apiResponse, setApiResponse] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
     const [showSuccess, setShowSuccess] = useState(false);
     const router = useRouter()
@@ -21,7 +20,6 @@ export default function LoginPage() {
             });
 
             const data = await res.json();
-            setApiResponse(data);
 
             if (res.ok) {
                 setShowSuccess(true);
@@ -38,7 +36,7 @@ export default function LoginPage() {
         <div className="min-h-screen bg-blue-400 flex items-center justify-center px-4 py-12">
             <div className="bg-blue-400 rounded-2xl shadow-2xl p-10 w-full max-w-md animate-fade-in">
                 <h1 className="text-3xl font-bold text-white mb-6 text-center">Giriş Yap</h1>
-                
+
                 {showSuccess && (
                     <div className="mb-4 p-3 bg-green-100 text-green-800 rounded-lg">
                         Giriş başarılı! Yönlendiriliyorsunuz...
@@ -52,14 +50,6 @@ export default function LoginPage() {
                 )}
 
 
-                {apiResponse && (
-                    <div className="mb-4 p-3 bg-gray-100 text-gray-800 rounded-lg">
-                        <h3 className="font-bold mb-2"></h3>
-                        <pre className="text-xs overflow-auto">
-                            {JSON.stringify(apiResponse, null, 2)}
-                        </pre>
-                    </div>
-                )}
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>

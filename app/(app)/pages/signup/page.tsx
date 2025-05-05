@@ -4,7 +4,6 @@ import {useRouter} from "next/navigation"
 
 export default function SignupPage() {
     const [form,setForm] = useState({email:'',password:'',name:''})
-    const [apiResponse, setApiResponse] = useState<any>(null)
     const [error, setError] = useState<string | null>(null)
     const [showSuccess, setShowSuccess] = useState(false)
     const router = useRouter()
@@ -12,7 +11,6 @@ export default function SignupPage() {
     const handleSubmit = async (e:React.FormEvent)=>{
         e.preventDefault()
         setError(null)
-        setApiResponse(null)
 
         try {
             const res = await fetch('/api/auth/register', {
@@ -22,7 +20,6 @@ export default function SignupPage() {
             })
 
             const data = await res.json()
-            setApiResponse(data)
 
             if (res.ok) {
                 setShowSuccess(true)
@@ -54,15 +51,7 @@ export default function SignupPage() {
                     </div>
                 )}
 
-
-                {apiResponse && (
-                    <div className="mb-4 p-3 bg-gray-100 text-gray-800 rounded-lg">
-                        <h3 className="font-bold mb-2">API Yanıtı:</h3>
-                        <pre className="text-xs overflow-auto">
-                            {JSON.stringify(apiResponse, null, 2)}
-                        </pre>
-                    </div>
-                )}
+                
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>
