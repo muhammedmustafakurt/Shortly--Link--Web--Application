@@ -90,6 +90,13 @@ export default function Header() {
             <div className={`md:hidden ${menuOpen ? 'block animate-fadeIn' : 'hidden'} rounded-b-2xl overflow-hidden transition-all duration-300`}>
                 <div className="pt-4 pb-6 space-y-1 bg-white shadow-xl">
                     <Link
+                        href="/"
+                        className="block px-6 py-3 text-base font-semibold text-gray-700 hover:text-amber-400 hover:bg-amber-50 transition-all duration-300"
+                        onClick={closeMenu}
+                    >
+                        Link Kısaltıcı
+                    </Link>
+                    <Link
                         href="/pages/qrcodegenerator"
                         className="block px-6 py-3 text-base font-semibold text-gray-700 hover:text-amber-400 hover:bg-amber-50 transition-all duration-300"
                         onClick={closeMenu}
