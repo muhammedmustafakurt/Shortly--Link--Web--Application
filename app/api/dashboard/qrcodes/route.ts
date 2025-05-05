@@ -23,7 +23,7 @@ export async function GET() {
 
         let userId: string | null = null;
         try {
-            const decoded = jwt.verify(token, JWT_SECRET) as { sub?: string };  // Changed to sub
+            const decoded = jwt.verify(token, JWT_SECRET as string) as { sub?: string };  // Changed to sub
             userId = decoded.sub || null;
         } catch (error) {
             console.error('Token doğrulama hatası:', error);

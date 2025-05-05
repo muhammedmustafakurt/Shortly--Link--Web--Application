@@ -18,7 +18,7 @@ export async function POST(request: Request) {
             data: {
                 originalUrl,
                 shortCode,
-                userId:'null',
+                userId: 'null',
             },
         });
 
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error('Link kısaltma hatası:', error);
 
-        if (error.code === 'P2002') {
+        if (error instanceof Error && 'code' in error && error.code === 'P2002') {
             return NextResponse.json(
                 { error: 'Bu kısa kod zaten kullanılıyor, lütfen tekrar deneyin' },
                 { status: 409 }

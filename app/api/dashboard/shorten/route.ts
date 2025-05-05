@@ -34,7 +34,7 @@ export async function POST(request: Request) {
 
         let userId: string | null = null;
         try {
-            const decoded = jwt.verify(token, JWT_SECRET) as { sub?: string };
+            const decoded = jwt.verify(token, JWT_SECRET as string) as { sub?: string };
             userId = decoded.sub || null;
         } catch (error) {
             console.error('Token doğrulama hatası:', error);
