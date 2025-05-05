@@ -59,10 +59,10 @@ export async function POST(req: Request) {
             }
         })
 
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-            expiresIn: '1d',
-            algorithm: 'HS256'
-        })
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, {
+    expiresIn: '1d',
+    algorithm: 'HS256'
+});
 
         const response = NextResponse.json({
             user: {
