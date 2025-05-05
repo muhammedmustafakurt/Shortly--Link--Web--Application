@@ -23,7 +23,7 @@ export default function LoginPage() {
 
             if (res.ok) {
                 setShowSuccess(true);
-                setTimeout(() => router.push('/dashboard'), 3000);
+                setTimeout(() => router.push('/dashboard'), 1000);
             } else {
                 setError(data.message || 'Giriş başarısız email veya şifre yanlış olabilir!');
             }

@@ -23,7 +23,7 @@ export default function SignupPage() {
 
             if (res.ok) {
                 setShowSuccess(true)
-                setTimeout(() => router.push('/dashboard'), 3000)
+                setTimeout(() => router.push('/dashboard'), 1000)
             } else {
                 setError(data.message || 'Kayıt işlemi başarısız email veritabanına kayıtlı olabilir!')
             }
