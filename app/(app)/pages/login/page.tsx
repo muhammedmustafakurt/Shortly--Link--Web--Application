@@ -14,7 +14,13 @@ export default function LoginPage() {
                 headers:{'Content-Type':'application/json'},
                 body:JSON.stringify(form)
             })
-        if (res.ok) router.push('/dashboard')
+        if (res.ok) {
+            await new Promise(resolve => {
+                alert('Giriş Başarılı');
+                resolve();
+            });
+            router.push('/dashboard');
+        }
     }
     return (
         <div className="min-h-screen bg-blue-400 flex items-center justify-center px-4 py-12">
