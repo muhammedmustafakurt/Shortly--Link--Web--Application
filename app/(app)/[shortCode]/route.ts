@@ -3,11 +3,13 @@ import prisma from '@/lib/prisma';
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { shortCode: string } }
+    { params }: { params: Promise<{ shortCode: string }> }
 ) {
+    const { shortCode } = await params;
+
     try {
         const url = await prisma.shortenedUrl.findUnique({
-            where: { shortCode: params.shortCode },
+            where: { shortCode },
         });
 
         if (!url) {
