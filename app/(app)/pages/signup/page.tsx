@@ -25,7 +25,7 @@ export default function SignupPage() {
                 setShowSuccess(true)
                 setTimeout(() => router.push('/dashboard'), 3000)
             } else {
-                setError(data.message || 'Kayıt işlemi başarısız')
+                setError(data.message || 'Kayıt işlemi başarısız email veritabanına kayıtlı olabilir!')
             }
         } catch (err) {
             setError('Bir hata oluştu: ' + (err as Error).message)
