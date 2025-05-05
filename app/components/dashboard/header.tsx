@@ -36,7 +36,7 @@ export default function Header() {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <Link href="/dashboard" className="text-lg font-semibold text-black">
-                        LinkShortener
+                        Kisaltl.ink Gösterge paneli
                     </Link>
 
                     {/* Desktop Navigation */}
