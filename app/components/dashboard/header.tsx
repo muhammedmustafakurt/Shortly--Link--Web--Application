@@ -31,11 +31,11 @@ export default function Header() {
     };
 
     return (
-        <header className="bg-blue-400 shadow-sm sticky top-0 z-50">
+        <header className="bg-white shadow-sm sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
-                    <Link href="/dashboard" className="text-lg font-semibold text-gray-900">
+                    <Link href="/dashboard" className="text-lg font-semibold text-black">
                         LinkShortener
                     </Link>
 
@@ -45,7 +45,7 @@ export default function Header() {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                                className="text-black hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
                             >
                                 {item.label}
                             </Link>
@@ -56,7 +56,7 @@ export default function Header() {
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={() => setMenuOpen(!menuOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none"
+                            className="inline-flex items-center justify-center p-2 rounded-md text-black hover:text-blue-600 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
                         >
                             {menuOpen ? (
                                 <X className="h-6 w-6" />
@@ -69,7 +69,7 @@ export default function Header() {
                     {/* Logout button - desktop */}
                     <button
                         onClick={handleLogout}
-                        className="hidden md:block text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                        className="hidden md:block text-black hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
                     >
                         Çıkış Yap
                     </button>
@@ -88,7 +88,7 @@ export default function Header() {
                         <Link
                             key={item.href}
                             href={item.href}
-                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                            className="block px-3 py-2 rounded-md text-base font-medium text-black hover:text-blue-600 hover:bg-gray-50 transition-colors duration-200"
                             onClick={() => setMenuOpen(false)}
                         >
                             {item.label}
@@ -99,7 +99,7 @@ export default function Header() {
                             handleLogout();
                             setMenuOpen(false);
                         }}
-                        className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                        className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-black hover:text-blue-600 hover:bg-gray-50 transition-colors duration-200"
                     >
                         Çıkış Yap
                     </button>
