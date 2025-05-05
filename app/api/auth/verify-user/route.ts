@@ -21,21 +21,18 @@ export async function POST(request: Request) {
         const token = authHeader.split(' ')[1]
         const { userId } = await request.json()
 
-        // Token'ı doğrula
         const secret = new TextEncoder().encode(JWT_SECRET)
         const { payload } = await jwtVerify(token, secret, {
             algorithms: ['HS256']
         })
 
-        // Token'daki userId ile istekteki userId eşleşmeli
-        if (payload.userId !== userId) {
+        if (payload.sub !== userId) {
             return NextResponse.json(
                 { error: 'Unauthorized' },
                 { status: 401 }
             )
         }
 
-        // Kullanıcıyı veritabanından bul
         const user = await prisma.user.findUnique({
             where: { id: userId },
             select: { id: true, email: true, name: true }

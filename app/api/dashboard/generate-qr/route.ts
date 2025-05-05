@@ -21,7 +21,7 @@ cloudinary.config({
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { url, shortCode } = body; // Add shortCode to the request body
+        const { url, shortCode } = body;
 
         if (!url) {
             return NextResponse.json({ message: 'URL is required' }, { status: 400 });
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
         }
 
         // Verify user token
-        const cookieStore = await cookies();
+        const cookieStore =await cookies();
         const token = cookieStore.get('token')?.value;
 
         if (!token) {
@@ -44,8 +44,8 @@ export async function POST(request: Request) {
 
         let userId: string | null = null;
         try {
-            const decoded = jwt.verify(token, JWT_SECRET) as { userId?: string };
-            userId = decoded.userId || null;
+            const decoded = jwt.verify(token, JWT_SECRET) as { sub?: string };
+            userId = decoded.sub || null;
         } catch (error) {
             console.error('Token verification error:', error);
             return NextResponse.json(
@@ -75,12 +75,12 @@ export async function POST(request: Request) {
                     overwrite: false,
                     resource_type: 'image'
                 },
-                (error, result) => {
+                (error: any, result: any) => {
                     if (error) reject(error);
                     else resolve(result);
                 }
             );
-        });
+        }) as any;
 
         const updatedUrl = await prisma.shortenedUrl.update({
             where: {

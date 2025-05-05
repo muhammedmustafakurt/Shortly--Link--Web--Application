@@ -11,31 +11,31 @@ if (!JWT_SECRET) {
 
 export async function GET() {
     try {
-        const cookieStore = await cookies()
-        const token = cookieStore.get('token')?.value
+        const cookieStore =await cookies();  // Removed await
+        const token = cookieStore.get('token')?.value;
 
         if (!token) {
             return NextResponse.json(
-                { error: 'Yetkilendirme tokenı bulunamadı' },
+                { success: false, error: 'Yetkilendirme tokenı bulunamadı' },
                 { status: 401 }
             );
         }
 
         let userId: string | null = null;
         try {
-            const decoded = jwt.verify(token, JWT_SECRET) as { userId?: string };
-            userId = decoded.userId || null;
+            const decoded = jwt.verify(token, JWT_SECRET) as { sub?: string };  // Changed to sub
+            userId = decoded.sub || null;
         } catch (error) {
             console.error('Token doğrulama hatası:', error);
             return NextResponse.json(
-                { error: 'Geçersiz token' },
+                { success: false, error: 'Geçersiz token' },
                 { status: 401 }
             );
         }
 
         if (!userId) {
             return NextResponse.json(
-                { error: 'Kullanıcı kimliği bulunamadı' },
+                { success: false, error: 'Kullanıcı kimliği bulunamadı' },
                 { status: 401 }
             );
         }
@@ -43,7 +43,7 @@ export async function GET() {
         const shortenedUrls = await prisma.shortenedUrl.findMany({
             where: {
                 userId,
-                qrCodeUrl: { not: null }  // Only include URLs with qrCodeUrl
+                qrCodeUrl: { not: null }  // Only include URLs with QR codes
             },
             orderBy: { createdAt: 'desc' },
             select: {
@@ -56,7 +56,10 @@ export async function GET() {
             }
         });
 
-        return NextResponse.json({ success: true, data: shortenedUrls });
+        return NextResponse.json({
+            success: true,
+            data: shortenedUrls
+        });
 
     } catch (error: any) {
         console.error('Linkleri getirme hatası:', error);

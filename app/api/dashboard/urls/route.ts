@@ -11,31 +11,31 @@ if (!JWT_SECRET) {
 
 export async function GET() {
     try {
-        const cookieStore = await cookies()
-        const token = cookieStore.get('token')?.value
+        const cookieStore =await cookies();
+        const token = cookieStore.get('token')?.value;
 
         if (!token) {
             return NextResponse.json(
-                { error: 'Yetkilendirme tokenı bulunamadı' },
+                { success: false, error: 'Yetkilendirme tokenı bulunamadı' },
                 { status: 401 }
             );
         }
 
         let userId: string | null = null;
         try {
-            const decoded = jwt.verify(token, JWT_SECRET) as { userId?: string };
-            userId = decoded.userId || null;
+            const decoded = jwt.verify(token, JWT_SECRET) as { sub?: string };
+            userId = decoded.sub || null;
         } catch (error) {
             console.error('Token doğrulama hatası:', error);
             return NextResponse.json(
-                { error: 'Geçersiz token' },
+                { success: false, error: 'Geçersiz token' },
                 { status: 401 }
             );
         }
 
         if (!userId) {
             return NextResponse.json(
-                { error: 'Kullanıcı kimliği bulunamadı' },
+                { success: false, error: 'Kullanıcı kimliği bulunamadı' },
                 { status: 401 }
             );
         }
@@ -48,11 +48,15 @@ export async function GET() {
                 originalUrl: true,
                 shortCode: true,
                 createdAt: true,
-                clicks: true
+                clicks: true,
+                qrCodeUrl: true // QR kod URL'sini de ekledim
             }
         });
 
-        return NextResponse.json({ success: true, data: shortenedUrls });
+        return NextResponse.json({
+            success: true,
+            data: shortenedUrls
+        });
 
     } catch (error: any) {
         console.error('Linkleri getirme hatası:', error);

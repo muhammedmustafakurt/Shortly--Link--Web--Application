@@ -21,8 +21,9 @@ export async function POST(request: Request) {
                 { status: 400 }
             );
         }
-        const cookieStore = await cookies()
-        const token = cookieStore.get('token')?.value
+
+        const cookieStore =await cookies();
+        const token = cookieStore.get('token')?.value;
 
         if (!token) {
             return NextResponse.json(
@@ -33,8 +34,8 @@ export async function POST(request: Request) {
 
         let userId: string | null = null;
         try {
-            const decoded = jwt.verify(token, JWT_SECRET) as { userId?: string };
-            userId = decoded.userId || null;
+            const decoded = jwt.verify(token, JWT_SECRET) as { sub?: string };
+            userId = decoded.sub || null;
         } catch (error) {
             console.error('Token doğrulama hatası:', error);
             return NextResponse.json(

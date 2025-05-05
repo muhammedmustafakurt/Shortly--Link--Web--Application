@@ -11,6 +11,8 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@prisma/client": "^6.7.0",
+    "@upstash/ratelimit": "^2.0.5",
+    "@upstash/redis": "^1.34.8",
     "autoprefixer": "^10.4.21",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.6.0",

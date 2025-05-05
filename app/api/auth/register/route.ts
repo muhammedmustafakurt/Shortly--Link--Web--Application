@@ -2,33 +2,79 @@ import { NextResponse } from 'next/server'
 import prisma from '@/lib/db'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import { rateLimit } from '@/lib/rate-limit'
+import { z } from 'zod'
+
+if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET environment variable is not set')
+}
+
+const userSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(8).regex(/^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/),
+    name: z.string().min(2)
+})
 
 export async function POST(req: Request) {
     try {
-        const { email, password, name } = await req.json()
+        // Rate limiting kontrolü
+        const ip = req.headers.get('x-forwarded-for') || '127.0.0.1'
+        const { success } = await rateLimit.limit(ip)
+        if (!success) {
+            return NextResponse.json(
+                { error: 'Too many requests' },
+                { status: 429 }
+            )
+        }
+
+        const body = await req.json()
+
+        // Input validation
+        try {
+            userSchema.parse(body)
+        } catch (error) {
+            return NextResponse.json(
+                { error: 'Invalid input format' },
+                { status: 400 }
+            )
+        }
+
+        const { email, password, name } = body
 
         const existingUser = await prisma.user.findUnique({ where: { email } })
         if (existingUser) {
             return NextResponse.json(
                 { error: 'Email already exists' },
-                { status: 400 }
+                { status: 409 }
             )
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10)
+        const hashedPassword = await bcrypt.hash(password, 12)
 
         const user = await prisma.user.create({
-            data: { email, password: hashedPassword, name }
+            data: {
+                email,
+                password: hashedPassword,
+                name
+            }
         })
 
-        const JWT_SECRET = process.env.JWT_SECRET!
-        const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1d' })
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+            expiresIn: '1d',
+            algorithm: 'HS256'
+        })
 
-        // ✅ Cookie'yi NextResponse ile ayarlıyoruz
-        const response = NextResponse.json({ user }, { status: 201 })
+        const response = NextResponse.json({
+            user: {
+                id: user.id,
+                email: user.email,
+                name: user.name
+            }
+        }, { status: 201 })
+
         response.cookies.set('token', token, {
             httpOnly: true,
-            maxAge: 86400, // 1 gün
+            maxAge: 86400,
             path: '/',
             sameSite: 'strict',
             secure: process.env.NODE_ENV === 'production',
@@ -36,8 +82,9 @@ export async function POST(req: Request) {
 
         return response
     } catch (error) {
+        console.error('Registration error:', error)
         return NextResponse.json(
-            { error: 'Internal Server Error' },
+            { error: 'Registration failed' },
             { status: 500 }
         )
     }

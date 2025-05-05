@@ -15,7 +15,7 @@ export default function LoginPage() {
                 headers:{'Content-Type':'application/json'},
                 body:JSON.stringify(form)
             })
-        if (res.ok) router.push('/dashboard')
+        if (res.ok) router.push('/pages/dashboard')
     }
     return (
         <div className="min-h-screen bg-blue-400 flex items-center justify-center px-4 py-12">
