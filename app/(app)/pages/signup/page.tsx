@@ -51,7 +51,7 @@ export default function SignupPage() {
                     </div>
                 )}
 
-                
+
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>
