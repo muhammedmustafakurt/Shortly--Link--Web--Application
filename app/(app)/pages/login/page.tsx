@@ -38,25 +38,23 @@ export default function LoginPage() {
         <div className="min-h-screen bg-blue-400 flex items-center justify-center px-4 py-12">
             <div className="bg-blue-400 rounded-2xl shadow-2xl p-10 w-full max-w-md animate-fade-in">
                 <h1 className="text-3xl font-bold text-white mb-6 text-center">Giriş Yap</h1>
-
-                {/* Başarılı giriş mesajı */}
+                
                 {showSuccess && (
                     <div className="mb-4 p-3 bg-green-100 text-green-800 rounded-lg">
                         Giriş başarılı! Yönlendiriliyorsunuz...
                     </div>
                 )}
 
-                {/* Hata mesajı */}
                 {error && (
                     <div className="mb-4 p-3 bg-red-100 text-red-800 rounded-lg">
                         {error}
                     </div>
                 )}
 
-                {/* API yanıtını gösterme */}
+
                 {apiResponse && (
                     <div className="mb-4 p-3 bg-gray-100 text-gray-800 rounded-lg">
-                        <h3 className="font-bold mb-2">API Yanıtı:</h3>
+                        <h3 className="font-bold mb-2"></h3>
                         <pre className="text-xs overflow-auto">
                             {JSON.stringify(apiResponse, null, 2)}
                         </pre>

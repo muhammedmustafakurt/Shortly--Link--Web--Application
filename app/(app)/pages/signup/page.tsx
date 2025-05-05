@@ -4,22 +4,65 @@ import {useRouter} from "next/navigation"
 
 export default function SignupPage() {
     const [form,setForm] = useState({email:'',password:'',name:''})
+    const [apiResponse, setApiResponse] = useState<any>(null)
+    const [error, setError] = useState<string | null>(null)
+    const [showSuccess, setShowSuccess] = useState(false)
     const router = useRouter()
+
     const handleSubmit = async (e:React.FormEvent)=>{
         e.preventDefault()
-        const res = await fetch('/api/auth/register',
-        {
-            method:'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form)
+        setError(null)
+        setApiResponse(null)
+
+        try {
+            const res = await fetch('/api/auth/register', {
+                method:'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form)
+            })
+
+            const data = await res.json()
+            setApiResponse(data)
+
+            if (res.ok) {
+                setShowSuccess(true)
+                setTimeout(() => router.push('/dashboard'), 3000)
+            } else {
+                setError(data.message || 'Kayıt işlemi başarısız')
+            }
+        } catch (err) {
+            setError('Bir hata oluştu: ' + (err as Error).message)
         }
-        )
-        if (res.ok) router.push('/dashboard')
     }
+
     return (
         <div className="min-h-screen bg-blue-400 flex items-center justify-center px-4 py-12">
             <div className="bg-blue-400 rounded-2xl shadow-2xl p-10 w-full max-w-md animate-fade-in">
                 <h1 className="text-3xl font-bold text-white mb-6 text-center">Kayıt Ol</h1>
+
+
+                {showSuccess && (
+                    <div className="mb-4 p-3 bg-green-100 text-green-800 rounded-lg">
+                        Kayıt başarılı! Yönlendiriliyorsunuz...
+                    </div>
+                )}
+
+
+                {error && (
+                    <div className="mb-4 p-3 bg-red-100 text-red-800 rounded-lg">
+                        {error}
+                    </div>
+                )}
+
+
+                {apiResponse && (
+                    <div className="mb-4 p-3 bg-gray-100 text-gray-800 rounded-lg">
+                        <h3 className="font-bold mb-2">API Yanıtı:</h3>
+                        <pre className="text-xs overflow-auto">
+                            {JSON.stringify(apiResponse, null, 2)}
+                        </pre>
+                    </div>
+                )}
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>
@@ -30,6 +73,7 @@ export default function SignupPage() {
                             onChange={(e)=>setForm({...form, name: e.target.value})}
                             className="w-full p-3 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-400 text-gray-800"
                             placeholder="Adınız"
+                            required
                         />
                     </div>
 
@@ -41,6 +85,7 @@ export default function SignupPage() {
                             onChange={(e)=>setForm({...form, email: e.target.value})}
                             className="w-full p-3 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-400 text-gray-800"
                             placeholder="mail@example.com"
+                            required
                         />
                     </div>
 
@@ -52,6 +97,8 @@ export default function SignupPage() {
                             onChange={(e)=>setForm({...form, password: e.target.value})}
                             className="w-full p-3 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-400 text-gray-800"
                             placeholder="••••••••"
+                            required
+                            minLength={6}
                         />
                     </div>
 
