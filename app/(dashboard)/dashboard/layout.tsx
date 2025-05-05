@@ -13,6 +13,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html lang="tr">
         <body>
+
         <Header />
         {children}
         <Footer />

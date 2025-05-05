@@ -1,9 +1,8 @@
-// components/header.tsx
 "use client";
 
-import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 
@@ -11,79 +10,101 @@ export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const router = useRouter();
 
+    const navItems = [
+        { href: "/dashboard/links", label: "Link Kısalt" },
+        { href: "/dashboard/qr-codes", label: "QR kod oluştur" },
+        { href: "/dashboard/my-links", label: "Kısaltılmış Linklerim" },
+        { href: "/dashboard/my-qr-codes", label: "QR Kodlarım" },
+        { href: "/dashboard/settings", label: "Ayarlar" },
+    ];
+
     const handleLogout = async () => {
         try {
             const response = await fetch("/api/dashboard/logout", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
             });
-
-            if (response.ok) {
-                router.push("/");
-            }
+            if (response.ok) router.push("/");
         } catch (error) {
             console.error("Logout error:", error);
         }
     };
 
     return (
-        <header className="bg-white border-b shadow-sm sticky top-0 z-50">
-            <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-                <Link href="/dashboard" className="text-xl font-bold text-gray-800">
-                    Kisaltl.ink Gösterge Paneli
-                </Link>
+        <header className="bg-blue-400 shadow-sm sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-16">
+                    {/* Logo */}
+                    <Link href="/dashboard" className="text-lg font-semibold text-gray-900">
+                        LinkShortener
+                    </Link>
 
-                <nav className="hidden md:flex space-x-6">
-                    <Link href="/dashboard/links" className="text-gray-600 hover:text-gray-900">Link Kısalt</Link>
-                    <Link href="/dashboard/qr-codes" className="text-gray-600 hover:text-gray-900">QR kod oluştur</Link>
-                    <Link href="/dashboard/my-links" className="text-gray-600 hover:text-gray-900">Kısaltılmış Linklerim</Link>
-                    <Link href="/dashboard/my-qr-codes" className="text-gray-600 hover:text-gray-900">QR Kodlarım</Link>
-                    <Link href="/dashboard/settings" className="text-gray-600 hover:text-gray-900">Ayarlar</Link>
+                    {/* Desktop Navigation */}
+                    <nav className="hidden md:flex space-x-8">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
+                    </nav>
+
+                    {/* Mobile menu button */}
+                    <div className="md:hidden flex items-center">
+                        <button
+                            onClick={() => setMenuOpen(!menuOpen)}
+                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none"
+                        >
+                            {menuOpen ? (
+                                <X className="h-6 w-6" />
+                            ) : (
+                                <Menu className="h-6 w-6" />
+                            )}
+                        </button>
+                    </div>
+
+                    {/* Logout button - desktop */}
                     <button
                         onClick={handleLogout}
-                        className="text-gray-600 hover:text-gray-900"
+                        className="hidden md:block text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
                     >
                         Çıkış Yap
-                    </button>
-                </nav>
-
-                <button
-                    className="md:hidden text-gray-600 z-50"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                >
-                    {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                </button>
-            </div>
-
-            {/* Mobile Drawer Menu */}
-            <div className={clsx(
-                "fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform transition-transform duration-300 z-40",
-                menuOpen ? "translate-x-0" : "-translate-x-full"
-            )}>
-                <div className="p-4 space-y-4">
-                    <Link href="/dashboard/links" className="block text-gray-700 hover:text-black">Link Kısalt</Link>
-                    <Link href="/dashboard/qr-codes" className="block text-gray-700 hover:text-black">QR kod oluştur</Link>
-                    <Link href="/dashboard/my-links" className="block text-gray-700 hover:text-black">Kısaltılmış Linklerim</Link>
-                    <Link href="/dashboard/my-qr-codes" className="block text-gray-700 hover:text-black">QR Kodlarım</Link>
-                    <Link href="/dashboard/settings" className="block text-gray-700 hover:text-black">Ayarlar</Link>
-                    <button
-                        onClick={handleLogout}
-                        className="cursor-pointer block text-gray-700 hover:text-black w-full text-left"
-                    >
-                        Çıkış
                     </button>
                 </div>
             </div>
 
-            {/* Overlay when menu is open */}
-            {menuOpen && (
-                <div
-                    className="fixed inset-0 bg-black bg-opacity-30 z-30 md:hidden"
-                    onClick={() => setMenuOpen(false)}
-                />
-            )}
+            {/* Mobile Navigation */}
+            <div
+                className={clsx(
+                    "md:hidden bg-white shadow-md",
+                    menuOpen ? "block" : "hidden"
+                )}
+            >
+                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    {navItems.map((item) => (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
+                    <button
+                        onClick={() => {
+                            handleLogout();
+                            setMenuOpen(false);
+                        }}
+                        className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                    >
+                        Çıkış Yap
+                    </button>
+                </div>
+            </div>
         </header>
     );
 }
