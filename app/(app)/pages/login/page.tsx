@@ -3,10 +3,12 @@ import {useState} from "react";
 import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
-    const [form,setForm]= useState({email:'',password:''})
-    const [apiResponse, setApiResponse] = useState<any>(null); // API yanıtını saklamak için state
-    const [error, setError] = useState<string | null>(null); // Hata mesajı için state
-    const router = useRouter()
+    const [form, setForm] = useState({ username: '', password: '' });
+    const [apiResponse, setApiResponse] = useState<any>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const router = useRouter();
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
@@ -19,10 +21,12 @@ export default function LoginPage() {
             });
 
             const data = await res.json();
+            setApiResponse(data);
 
             if (res.ok) {
-                setApiResponse(data);
-                router.push('/dashboard');
+                setShowSuccess(true);
+
+                setTimeout(() => router.push('/dashboard'), 3000);
             } else {
                 setError(data.message || 'Giriş başarısız');
             }
