@@ -49,7 +49,7 @@ export async function GET() {
                 shortCode: true,
                 createdAt: true,
                 clicks: true,
-                qrCodeUrl: true // QR kod URL'sini de ekledim
+                qrCodeUrl: true // QR kod URL'sini de ekledima
             }
         });
 
