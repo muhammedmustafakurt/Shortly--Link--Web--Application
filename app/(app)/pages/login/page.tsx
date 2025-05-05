@@ -4,24 +4,32 @@ import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
     const [form,setForm]= useState({email:'',password:''})
+    const [apiResponse, setApiResponse] = useState<any>(null); // API yanıtını saklamak için state
+    const [error, setError] = useState<string | null>(null); // Hata mesajı için state
     const router = useRouter()
-    const handleSubmit = async (e:React.FormEvent)=>
-    {
-        e.preventDefault()
-        const res = await fetch('/api/auth/login'
-        ,{
-            method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify(form)
-            })
-        if (res.ok) {
-            await new Promise(resolve => {
-                alert('Giriş Başarılı');
-                resolve();
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError(null);
+
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form)
             });
-            router.push('/dashboard');
+
+            const data = await res.json();
+
+            if (res.ok) {
+                setApiResponse(data);
+                router.push('/dashboard');
+            } else {
+                setError(data.message || 'Giriş başarısız');
+            }
+        } catch (err) {
+            setError('Bir hata oluştu: ' + (err as Error).message);
         }
-    }
+    };
     return (
         <div className="min-h-screen bg-blue-400 flex items-center justify-center px-4 py-12">
             <div className="bg-blue-400 rounded-2xl shadow-2xl p-10 w-full max-w-md animate-fade-in">
