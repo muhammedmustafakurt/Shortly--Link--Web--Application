@@ -11,14 +11,14 @@ if (!process.env.JWT_SECRET) {
 
 const userSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(8).regex(/^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/),
+    password: z.string().min(8).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/),
     name: z.string().min(2)
 })
 
 export async function POST(req: Request) {
     try {
-        // Rate limiting kontrolü
-        const ip = req.headers.get('x-forwarded-for') || '127.0.0.1'
+        // Rate limiting kontrolü - DÜZELTİLDİ
+        const ip = (req.headers.get('x-forwarded-for') || '127.0.0.1').toString()
         const { success } = await rateLimit.limit(ip)
         if (!success) {
             return NextResponse.json(
