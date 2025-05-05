@@ -3,12 +3,11 @@ import {useState} from "react";
 import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
-    const [form, setForm] = useState({ username: '', password: '' });
+    const [form,setForm]= useState({email:'',password:''});
     const [apiResponse, setApiResponse] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
     const [showSuccess, setShowSuccess] = useState(false);
-    const router = useRouter();
-
+    const router = useRouter()
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
@@ -34,6 +33,7 @@ export default function LoginPage() {
             setError('Bir hata oluştu: ' + (err as Error).message);
         }
     };
+
     return (
         <div className="min-h-screen bg-blue-400 flex items-center justify-center px-4 py-12">
             <div className="bg-blue-400 rounded-2xl shadow-2xl p-10 w-full max-w-md animate-fade-in">
