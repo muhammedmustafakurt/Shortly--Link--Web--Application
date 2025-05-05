@@ -50,7 +50,9 @@ export default function QRListPage() {
     };
 
     if (loading) {
-        return <div className="min-h-screen bg-gray-100 p-8">Yükleniyor...</div>;
+        <div className="min-h-screen bg-gray-100 p-8 flex items-center justify-center">
+            <div className="text-xl font-semibold text-gray-700">Yükleniyor...</div>
+        </div>
     }
 
     return (

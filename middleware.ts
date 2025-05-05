@@ -24,7 +24,7 @@ export async function middleware(request: NextRequest) {
         const secret = new TextEncoder().encode(JWT_SECRET)
         const { payload } = await jwtVerify(authToken, secret, {
             algorithms: ['HS256'],
-            maxTokenAge: '30m' 
+            maxTokenAge: '30m'
         })
 
         const userId = payload.sub as string | undefined

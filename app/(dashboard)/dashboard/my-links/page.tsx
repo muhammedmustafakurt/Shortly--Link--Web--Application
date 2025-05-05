@@ -44,8 +44,8 @@ export default function UrlListPage() {
 
     if (urls.length === 0) {
         return (
-            <div className="min-h-screen bg-gray-100 p-8 flex items-center justify-center">
-                <div className="text-xl font-semibold text-gray-700">Henüz hiç URL oluşturmadınız</div>
+            <div className="bg-white rounded-lg shadow p-8 text-center">
+                <p className="text-gray-500">Henüz QR URL oluşturmadınız.</p>
             </div>
         );
     }
