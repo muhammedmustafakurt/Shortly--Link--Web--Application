@@ -9,11 +9,7 @@ if (!process.env.JWT_SECRET) {
     throw new Error('JWT_SECRET environment variable is not set')
 }
 
-const userSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(8).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/),
-    name: z.string().min(2)
-})
+
 
 export async function POST(req: Request) {
     try {
@@ -28,16 +24,7 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json()
-
-        // Input validation
-        try {
-            userSchema.parse(body)
-        } catch (error) {
-            return NextResponse.json(
-                { error: 'Invalid input format' },
-                { status: 400 }
-            )
-        }
+        
 
         const { email, password, name } = body
 
