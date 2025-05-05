@@ -20,10 +20,10 @@ export default function ShortenForm() {
                 setIsCopied(true);
                 setTimeout(() => setIsCopied(false), 2000);
             } else {
-                // Fallback: document.execCommand kullan
+
                 const textArea = document.createElement('textarea');
                 textArea.value = text;
-                textArea.style.position = 'fixed'; // Ekran dışına taşı
+                textArea.style.position = 'fixed';
                 document.body.appendChild(textArea);
                 textArea.select();
 
@@ -41,7 +41,7 @@ export default function ShortenForm() {
             }
         } catch (err) {
             console.error('Kopyalama başarısız:', err);
-            alert('Link kopyalanamadı. Manuel olarak kopyalayın.'); // Kullanıcıyı bilgilendir
+            alert('Link kopyalanamadı. Manuel olarak kopyalayın.');
         }
     };
 

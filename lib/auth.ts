@@ -7,12 +7,12 @@ if (!JWT_SECRET) {
     throw new Error('JWT_SECRET environment variable is not set');
 }
 
-// Token oluşturma (senkron)
+
 export const generateToken = (userId: string): string => {
     return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '1d' });
 };
 
-// Token doğrulama
+
 export const verifyToken = (token: string | undefined): boolean => {
     if (!token) {
         return false;

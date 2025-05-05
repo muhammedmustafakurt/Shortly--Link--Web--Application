@@ -1,4 +1,4 @@
-// app/layout.tsx
+
 import Header from "@/app/components/dashboard/header";
 import Footer from "@/app/components/dashboard/footer";
 import './globals.css'

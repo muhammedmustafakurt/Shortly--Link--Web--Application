@@ -129,16 +129,6 @@ export default function QRListPage() {
                             </table>
                         </div>
 
-                        {/* Sayfalama veya ek butonlar */}
-                        <div className="mt-4 flex justify-between items-center">
-                            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
-                                Önceki
-                            </button>
-                            <span className="text-sm text-gray-700">Sayfa 1 / 3</span>
-                            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
-                                Sonraki
-                            </button>
-                        </div>
                     </>
                 )}
             </div>

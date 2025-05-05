@@ -28,7 +28,6 @@ export default function Header() {
                         </Link>
                     </div>
 
-                    {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-10">
                         <nav className="flex space-x-8 tracking-wide">
                             <Link
@@ -73,7 +72,6 @@ export default function Header() {
                         </div>
                     </div>
 
-                    {/* Mobile menu button */}
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={() => setMenuOpen(!menuOpen)}
@@ -89,7 +87,6 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* Mobile menu */}
             <div className={`md:hidden ${menuOpen ? 'block animate-fadeIn' : 'hidden'} rounded-b-2xl overflow-hidden transition-all duration-300`}>
                 <div className="pt-4 pb-6 space-y-1 bg-white shadow-xl">
                     <Link

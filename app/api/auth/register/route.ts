@@ -3,7 +3,7 @@ import prisma from '@/lib/db'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { rateLimit } from '@/lib/rate-limit'
-import { z } from 'zod'
+
 
 if (!process.env.JWT_SECRET) {
     throw new Error('JWT_SECRET environment variable is not set')
@@ -13,7 +13,6 @@ if (!process.env.JWT_SECRET) {
 
 export async function POST(req: Request) {
     try {
-        // Rate limiting kontrolü - DÜZELTİLDİ
         const ip = (req.headers.get('x-forwarded-for') || '127.0.0.1').toString()
         const { success } = await rateLimit.limit(ip)
         if (!success) {
@@ -24,7 +23,7 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json()
-        
+
 
         const { email, password, name } = body
 

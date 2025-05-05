@@ -17,7 +17,6 @@ export default function Popup({
                                   closeOnOutsideClick = true,
                                   className = '',
                               }: PopupProps) {
-    // Close popup when pressing Escape key
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -38,7 +37,6 @@ export default function Popup({
         <AnimatePresence>
             {isOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    {/* Overlay with subtle transparency */}
                     <motion.div
                         initial={{opacity: 0}}
                         animate={{opacity: 0.7}}
@@ -47,7 +45,6 @@ export default function Popup({
                         onClick={closeOnOutsideClick ? onClose : undefined}
                     />
 
-                    {/* Popup content */}
                     <motion.div
                         initial={{opacity: 0}}
                         animate={{opacity: 0.6}}

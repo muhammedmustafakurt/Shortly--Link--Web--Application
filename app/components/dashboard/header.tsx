@@ -21,7 +21,7 @@ export default function Header() {
             });
 
             if (response.ok) {
-                router.push("/"); // Redirect to home page after logout
+                router.push("/");
             }
         } catch (error) {
             console.error("Logout error:", error);

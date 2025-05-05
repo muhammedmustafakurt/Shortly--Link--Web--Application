@@ -31,7 +31,6 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: 'Short code is required' }, { status: 400 });
         }
 
-        // Verify user token
         const cookieStore =await cookies();
         const token = cookieStore.get('token')?.value;
 
@@ -61,11 +60,10 @@ export async function POST(request: Request) {
             );
         }
 
-        // Generate QR code
         const qrCodeDataUrl = await QRCode.toDataURL(url);
         const base64Data = qrCodeDataUrl.replace(/^data:image\/\w+;base64,/, '');
 
-        // Upload to Cloudinary
+
         const uploadResult = await new Promise((resolve, reject) => {
             cloudinary.uploader.upload(
                 `data:image/png;base64,${base64Data}`,

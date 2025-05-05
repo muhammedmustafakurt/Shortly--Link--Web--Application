@@ -1,5 +1,4 @@
 "use client";
-// app/page.tsx
 import { useState } from "react";
 import ShortenForm from "@/app/components/shortenForm";
 import Popup from "@/app/components/Popup";
@@ -10,7 +9,7 @@ export default function Home() {
   return (
       <div className="min-h-screen bg-blue-400 text-lime-300 flex items-center justify-center -mt-12 p-6">
         <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Sol taraf */}
+
           <main>
             <ShortenForm/>
           </main>
@@ -49,7 +48,7 @@ export default function Home() {
           </Popup>
 
 
-          {/* Sağ taraf */}
+
           <div className="flex flex-col items-center justify-center space-y-6">
             <div className="bg-white text-blue-900 p-4 rounded-md shadow-lg w-full text-center animate-pulse">
               <p className="text-sm">Orijinal Link:</p>

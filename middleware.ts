@@ -20,11 +20,11 @@ export async function middleware(request: NextRequest) {
             return redirectToLogin(request)
         }
 
-        // JWT doğrulama
+
         const secret = new TextEncoder().encode(JWT_SECRET)
         const { payload } = await jwtVerify(authToken, secret, {
             algorithms: ['HS256'],
-            maxTokenAge: '30m' // Token'ın maksimum yaşını kontrol et
+            maxTokenAge: '30m' 
         })
 
         const userId = payload.sub as string | undefined
@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
             return redirectToLogin(request)
         }
 
-        // API'ye istek yaparak kullanıcıyı doğrula
+
         try {
             const ip = request.headers.get('x-forwarded-for') || '127.0.0.1'
 

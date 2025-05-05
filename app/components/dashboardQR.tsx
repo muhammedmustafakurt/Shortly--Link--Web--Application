@@ -68,7 +68,6 @@ export default function QRForm() {
         try {
             const shortCode = generateShortCode();
 
-            // 1. Önce kısa linki oluştur
             const shortenResponse = await fetch('/api/dashboard/shorten', {
                 method: 'POST',
                 headers: {
@@ -85,7 +84,6 @@ export default function QRForm() {
             const generatedShortUrl = `${window.location.origin}/${data.shortCode}`;
             setShortUrl(generatedShortUrl);
 
-            // 2. QR kodu oluştur ve Cloudinary'e yükle
             const qrResponse = await fetch('/api/dashboard/generate-qr', {
                 method: 'POST',
                 headers: {
@@ -93,7 +91,7 @@ export default function QRForm() {
                 },
                 body: JSON.stringify({
                     url: generatedShortUrl,
-                    shortCode: data.shortCode // Kısa kodu da gönderiyoruz
+                    shortCode: data.shortCode
                 }),
             });
 
@@ -103,9 +101,8 @@ export default function QRForm() {
 
             const qrData = await qrResponse.json();
 
-            // QR kod verilerini state'e kaydet
-            setQrCode(qrData.qrCodeDataUrl); // Base64 data URL
-            setQrCodeUrl(qrData.cloudinaryUrl); // Cloudinary URL
+            setQrCode(qrData.qrCodeDataUrl);
+            setQrCodeUrl(qrData.cloudinaryUrl);
 
         } catch (error) {
             console.error(error);

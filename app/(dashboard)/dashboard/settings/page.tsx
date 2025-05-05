@@ -10,7 +10,6 @@ export default function SettingsPage() {
         const newPassword = formData.get("newPassword") as string;
         const confirmPassword = formData.get("confirmPassword") as string;
 
-        // Şifrelerin eşleştiğini kontrol et
         if (newPassword !== confirmPassword) {
             alert("Yeni şifreler eşleşmiyor!");
             return;

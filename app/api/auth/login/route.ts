@@ -14,10 +14,8 @@ const failedAttempts = new Map<string, { count: number; lastAttempt: number }>()
 
 export async function POST(req: Request) {
     try {
-        // IP adresini al ve string olarak garantiye al
         const ip = (req.headers.get('x-forwarded-for') || '127.0.0.1').toString()
 
-        // Rate limit kontrolü (Upstash için doğru kullanım)
         const { success } = await rateLimit.limit(ip)
         if (!success) {
             return NextResponse.json(
@@ -26,10 +24,10 @@ export async function POST(req: Request) {
             )
         }
 
-        // Kullanıcı verilerini al
+
         const { email, password } = await req.json()
 
-        // Validasyon
+
         try {
             loginSchema.parse({ email, password })
         } catch (error) {
@@ -39,13 +37,12 @@ export async function POST(req: Request) {
             )
         }
 
-        // JWT secret kontrolü
         const JWT_SECRET = process.env.JWT_SECRET
         if (!JWT_SECRET) {
             throw new Error('JWT_SECRET tanımlı değil')
         }
 
-        // Başarısız giriş kontrolü
+
         const now = Date.now()
         const attempts = failedAttempts.get(ip) || { count: 0, lastAttempt: 0 }
 
@@ -56,7 +53,6 @@ export async function POST(req: Request) {
             )
         }
 
-        // Kullanıcıyı bul
         const user = await prisma.user.findUnique({
             where: { email },
             select: {
@@ -78,7 +74,6 @@ export async function POST(req: Request) {
             )
         }
 
-        // Şifre kontrolü
         const isPasswordValid = await bcrypt.compare(password, user.password)
         if (!isPasswordValid) {
             failedAttempts.set(ip, {
@@ -91,10 +86,8 @@ export async function POST(req: Request) {
             )
         }
 
-        // Başarılı giriş - kayıtları temizle
         failedAttempts.delete(ip)
 
-        // JWT token oluştur
         const token = jwt.sign(
             {
                 sub: user.id,
@@ -105,7 +98,7 @@ export async function POST(req: Request) {
             { algorithm: 'HS256' }
         )
 
-        // Yanıtı hazırla
+
         const response = NextResponse.json(
             {
                 user: {
@@ -117,7 +110,6 @@ export async function POST(req: Request) {
             { status: 200 }
         )
 
-        // Cookie'ye token'ı set et
         response.cookies.set('token', token, {
             httpOnly: true,
             maxAge: 30 * 60,

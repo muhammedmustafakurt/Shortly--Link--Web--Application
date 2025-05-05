@@ -38,7 +38,7 @@ export default function ShortenForm() {
             }
         } catch (err) {
             console.error('Kopyalama başarısız:', err);
-            alert('Link kopyalanamadı. Manuel olarak kopyalayın.'); // Kullanıcıyı bilgilendir
+            alert('Link kopyalanamadı. Manuel olarak kopyalayın.');
         }
     };
 

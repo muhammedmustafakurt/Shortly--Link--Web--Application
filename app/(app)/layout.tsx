@@ -29,8 +29,8 @@ export default function RootLayout({
         <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             style={{
-                backgroundColor: "var(--color-blue-400)", // Set the background color for the body
-                marginTop: "0px", // Adjust this based on your header height if needed
+                backgroundColor: "var(--color-blue-400)",
+                marginTop: "0px",
             }}
         >
         <Header/>
